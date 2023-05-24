@@ -20,15 +20,19 @@ class TabView(ctk.CTkTabview):
         self.studentsTab = self.add("students")
         self.tree = ttk.Treeview(master=self.studentsTab, columns=columns, show="headings")
         self.tree.pack(fill="both", expand=1, padx=20, pady=10)
+        style = ttk.Style(self)
+        style.theme_use("clam")
+        style.configure("Treeview", fieldbackground="#2B2B2B", background="#2B2B2B", foreground="#FFFFFF", relief='flat', borderwidth=0)
+        style.configure("Treeview.Heading", fieldbackground="#2FA572", background="#2FA572", foreground="#242424", relief='flat', borderwidth=0)
 
         for column in columns:
             self.tree.heading(column, text=column, anchor="w")
 
-        self.tree.column("#1", stretch="NO", width=40)
-        self.tree.column("#2", stretch="NO", width=120)
-        self.tree.column("#3", stretch="NO", width=120)
-        self.tree.column("#4", stretch="NO", width=100)
-        self.tree.column("#5", stretch="NO", width=100)
+        self.tree.column("#1", stretch=False, width=40)
+        self.tree.column("#2", stretch=False, width=120)
+        self.tree.column("#3", stretch=False, width=120)
+        self.tree.column("#4", stretch=False, width=120)
+        self.tree.column("#5", stretch=False, width=120)
 
         # Заполнение таблицы данными
         rows = connection.get_rows()
@@ -93,6 +97,7 @@ class TabView(ctk.CTkTabview):
         self.clearEntry()
 
     def get_selection(self, event):
+        self.clearEntry()
         for selection in self.tree.selection():
             item = self.tree.item(selection)
             id, name, date, group, sp, tel, email = item["values"][0:7]

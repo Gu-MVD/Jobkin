@@ -1,4 +1,4 @@
 host = "localhost"
 user = "root"
-password ="2802"
+password ="admin"
 db_name = "hackaton"
