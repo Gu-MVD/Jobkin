@@ -15,6 +15,7 @@ class TabView(ctk.CTkTabview):
         except Exception as e:
             print(e)
 
+        # Таблица student
         # Заполнение заголовков таблицы
         columns = connection.get_columns()
         self.studentsTab = self.add("students")
@@ -22,8 +23,10 @@ class TabView(ctk.CTkTabview):
         self.tree.pack(fill="both", expand=1, padx=20, pady=10)
         style = ttk.Style(self)
         style.theme_use("clam")
-        style.configure("Treeview", fieldbackground="#2B2B2B", background="#2B2B2B", foreground="#FFFFFF", relief='flat', borderwidth=0)
-        style.configure("Treeview.Heading", fieldbackground="#2FA572", background="#2FA572", foreground="#242424", relief='flat', borderwidth=0)
+        style.configure("Treeview", fieldbackground="#2B2B2B", background="#2B2B2B", foreground="#FFFFFF",
+                        relief='flat', borderwidth=0)
+        style.configure("Treeview.Heading", fieldbackground="#2FA572", background="#2FA572", foreground="#242424",
+                        relief='flat', borderwidth=0)
 
         for column in columns:
             self.tree.heading(column, text=column, anchor="w")
@@ -69,11 +72,12 @@ class TabView(ctk.CTkTabview):
         self.insertButton.pack(side="right", padx=(20, 0))
 
         self.additional_infoTab = self.add("student_additional_info")
-        self.additional_info = ctk.CTkLabel(self.additional_infoTab, text="to be continued...", font=("Open Sans", 32, "bold"))
+        self.additional_info = ctk.CTkLabel(self.additional_infoTab, text="to be continued...",
+                                            font=("Open Sans", 32, "bold"))
         self.additional_info.pack(anchor="center", fill="both", expand=1)
 
     def refreshTable(self):
-        connection.select_database()
+        connection.select_student()
         self.tree.delete(*self.tree.get_children())
         rows = connection.get_rows()
         for row in rows:
