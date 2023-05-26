@@ -2,6 +2,17 @@ import pymysql
 from config import *
 
 
+class Query:
+    SELECT_STUDENT = "select * from student"
+    SELECT_STUDENT_SOFT_SKILLS = "select * from student_soft_skills"
+    SELECT_STUDENT_EDUCATION = "select * from student_education"
+    SELECT_STUDENT_COMPETENCIES = "select * from student_competencies"
+    SELECT_STUDENT_ADDITIONAL_INFO = "select * from student_additional_info"
+    SELECT_SPECIALTY_CODE = "select * from specialty_code"
+    SELECT_DECODING_COMPETENCY_FULL = "select * from decoding_competency_full"
+    SELECT_STUDENT_PHOTO = "select * from student_photo"
+
+
 class Connection:
 
     def open(self):
@@ -28,11 +39,11 @@ class Connection:
         except Exception as ex:
             print("Error: " + str(ex))
 
-    def get_columns(self):
-        return list(self.select_student()[0].keys())
+    def get_columns(self, select_query):
+        return list(select_query[0].keys())
 
-    def get_rows(self):
-        return self.select_student()
+    def get_rows(self, select_query):
+        return select_query
 
     def select_student_soft_skills(self):
         try:
@@ -218,13 +229,72 @@ class Connection:
         except Exception as ex:
             print("Error: " + str(ex))
 
+    def delete_from_student_soft_skills(self, ID: int):
+        try:
+            with connection.cursor() as cursor:
+                delete_query = "delete from student_soft_skills where ID = %s" % ID
+                cursor.execute(delete_query)
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def delete_from_student_education(self, ID: int):
+        try:
+            with connection.cursor() as cursor:
+                delete_query = "delete from student_education where ID = %s" % ID
+                cursor.execute(delete_query)
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def delete_from_student_competencies(self, ID: int):
+        try:
+            with connection.cursor() as cursor:
+                delete_query = "delete from student_competencies where ID = %s" % ID
+                cursor.execute(delete_query)
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def delete_from_student_additional_info(self, ID: int):
+        try:
+            with connection.cursor() as cursor:
+                delete_query = "delete from student_additional_info where ID = %s" % ID
+                cursor.execute(delete_query)
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def delete_from_specialty_code(self, ID: int):
+        try:
+            with connection.cursor() as cursor:
+                delete_query = "delete from specialty_code where ID = %s" % ID
+                cursor.execute(delete_query)
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def delete_from_decoding_competency_full(self, ID: int):
+        try:
+            with connection.cursor() as cursor:
+                delete_query = "delete from decoding_competency_full where ID = %s" % ID
+                cursor.execute(delete_query)
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def delete_from_student_photo(self, ID: int):
+        try:
+            with connection.cursor() as cursor:
+                delete_query = "delete from student_photo where ID = %s" % ID
+                cursor.execute(delete_query)
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
 # Методы UPDATE
-    def update_student(self, ID: int, STUDENTNAME: str,
-                       DATEOFBIRTH: str,
-                       GROUPNUMBER: str,
-                       SPECIALTYCODE: int,
-                       TELNUMBER: str,
-                       EMAILADDRESS: str):
+    def update_student(self, ID: int, STUDENTNAME: str, DATEOFBIRTH: str, GROUPNUMBER: str, SPECIALTYCODE: int,
+                       TELNUMBER: str, EMAILADDRESS: str):
         try:
             with connection.cursor() as cursor:
                 update_query = "update student set STUDENTNAME = %s, DATEOFBIRTH = %s, " \
@@ -232,6 +302,32 @@ class Connection:
                                "where ID = %s"
                 cursor.execute(update_query,
                                (STUDENTNAME, DATEOFBIRTH, GROUPNUMBER, SPECIALTYCODE, TELNUMBER, EMAILADDRESS, ID))
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def update_student_soft_skills(self, ID: int, FIRSTSOFTSKILL: str, SECONDSOFTSKILL: str, THIRDSOFTSKILL: str,
+                                   FOURTHOFTSKILL: int, FIVETHSOFTSKILL: str):
+        try:
+            with connection.cursor() as cursor:
+                update_query = "update student_soft_skills set FIRSTSOFTSKILL = %s, SECONDSOFTSKILL = %s, " \
+                               "THIRDSOFTSKILL = %s, FOURTHOFTSKILL = %s, FIVETHSOFTSKILL = %s " \
+                               "where ID = %s"
+                cursor.execute(update_query,
+                               (FIRSTSOFTSKILL, SECONDSOFTSKILL, THIRDSOFTSKILL, FOURTHOFTSKILL, FIVETHSOFTSKILL, ID))
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def update_student_education(self, ID: int, ESTABLISHMENT: str, FACULTY: str, FORMOFSTUDY: str,
+                                   YEAROFENDING: int, CITY: str):
+        try:
+            with connection.cursor() as cursor:
+                update_query = "update student_education set ESTABLISHMENT = %s, FACULTY = %s, " \
+                               "FORMOFSTUDY = %s, YEAROFENDING = %s, CITY = %s " \
+                               "where ID = %s"
+                cursor.execute(update_query,
+                               (ESTABLISHMENT, FACULTY, FORMOFSTUDY, YEAROFENDING, CITY, ID))
             connection.commit()
         except Exception as ex:
             print("Error: " + str(ex))

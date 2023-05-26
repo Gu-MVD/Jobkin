@@ -5,6 +5,9 @@ ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("green")
 
 app = LoginApp()
-app.mainloop()
+try:
+    app.mainloop()
+except KeyboardInterrupt:
+    pass
 
 
