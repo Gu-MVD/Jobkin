@@ -8,6 +8,5 @@ app = LoginApp()
 try:
     app.mainloop()
 except KeyboardInterrupt:
-    pass
-
+    print("Программа завершена")
 

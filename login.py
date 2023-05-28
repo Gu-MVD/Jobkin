@@ -7,7 +7,7 @@ class LoginApp(ctk.CTk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.title("Authorization")
-        self.geometry("320x175")
+        self.geometry("320x175+800+375")
 
         self.grid_columnconfigure(1, weight=1)
 
@@ -16,7 +16,7 @@ class LoginApp(ctk.CTk):
 
         self.loginField = ctk.CTkEntry(self, placeholder_text="login", corner_radius=12)
         self.loginField.grid(row=1, column=0, columnspan=3, sticky="ew", padx=10)
-        self.passwordField = ctk.CTkEntry(self, placeholder_text="password", corner_radius=12)
+        self.passwordField = ctk.CTkEntry(self, placeholder_text="password", corner_radius=12, show="\u2022")
         self.passwordField.grid(row=2, column=0, columnspan=3, sticky="ew", padx=10, pady=10)
 
         self.loginButton = ctk.CTkButton(self, text="Login", corner_radius=12, command=self.login)

@@ -178,11 +178,11 @@ class Connection:
                 insert_query = "insert into student_additional_info " \
                                "values (%s, %s, %s, %s, %s, %s)"
                 cursor.execute(insert_query,
-                               (ID, ADDITIONALINFO, FOREIGNLANGUAGE, DRIVERLICENSE,
-                                ADDITIONALCOMPETENCIES, SOCIALNETWORK))
+                               (ADDITIONALINFO, FOREIGNLANGUAGE, DRIVERLICENSE,
+                                ADDITIONALCOMPETENCIES, SOCIALNETWORK, int(ID)))
             connection.commit()
         except Exception as ex:
-            print("Error: " + str(ex))
+            print("Error ваыпвап: " + str(ex))
 
     def insert_into_specialty_code(self, SPECIALTYNAME: str):
         try:
@@ -331,3 +331,54 @@ class Connection:
             connection.commit()
         except Exception as ex:
             print("Error: " + str(ex))
+
+    def update_student_additioanl_info(self, ADDITIONALINFO: str, FOREIGNLANGUAGE: str, DRIVERLICENSE: str,
+                                       ADDITIONALCOMPETENCIES: str, SOCIALNETWORK: int, ID: int):
+        try:
+            with connection.cursor() as cursor:
+                update_query = "update student_additional_info set ADDITIONALINFO = %s, FOREIGNLANGUAGE = %s, " \
+                               "DRIVERLICENSE = %s, ADDITIONALCOMPETENCIES = %s, SOCIALNETWORK = %s " \
+                               "where ID = %s"
+                cursor.execute(update_query,
+                               (ADDITIONALINFO, FOREIGNLANGUAGE, DRIVERLICENSE, ADDITIONALCOMPETENCIES, SOCIALNETWORK,
+                                ID))
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def update_student_photo(self, ID: int, PHOTO: str):
+        try:
+            with connection.cursor() as cursor:
+                update_query = "update student_photo set PHOTO = %s where ID = %s"
+                cursor.execute(update_query,
+                               (PHOTO, ID))
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+    def update_specialty_code(self, SPECIALTYCODE: int, SPECIALTYNAME: str):
+        try:
+            with connection.cursor() as cursor:
+                update_query = "update specialty_code set SPECIALTYNAME = %s where SPECIALTYCODE = %s"
+                cursor.execute(update_query,
+                               (SPECIALTYNAME, SPECIALTYCODE))
+            connection.commit()
+        except Exception as ex:
+            print("Error: " + str(ex))
+
+# Вывод резюме по поиску
+    def show_resume(self, ID: int) -> list:
+        try:
+            with connection.cursor() as cursor:
+                select_query = "select student.STUDENTNAME, student.DATEOFBIRTH, student.GROUPNUMBER, " \
+                               "specialty_code.SPECIALTYNAME, student.TELEPHONENUMBER, " \
+                               "student_additional_info.FOREIGNLANGUAGE from student " \
+                               "inner join specialty_code on student.SPECIALTYCODE = specialty_code.SPECIALTYCODE " \
+                               "inner join student_additional_info on student.ID = student_additional_info.ID " \
+                               "where student.ID = %s"
+                cursor.execute(select_query, ID)
+                rows = cursor.fetchall()
+                return rows
+        except Exception as ex:
+            print("Error: " + str(ex))
+
